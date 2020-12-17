@@ -1,0 +1,15 @@
+{
+    "'$1' is not support command!": "控制台不支持 '$1' 命令！",
+    "You will shutdown $1 Console, continue?(y/N)": "您将关闭 $1 控制台，请确认是否继续(y/N)?",
+    "Exit $1 Console": "退出 $1 控制台",
+    "Cancel Exit": "取消退出操作",
+    "Config file error: can't import module: $1!": "配置文件错误：无法装载模块：$1!",
+    "help not support '$1' command\r\n": "帮助工具不支持'$1'命令\r\n",
+    "Execute system command": "执行操作系统命令",
+    "Command Executing, can't exit execute job!": "命令执行中，不允许退出执行监控！",
+    "Cancle Command execute, exit job!": "取消命令执行，退出执行监控！",
+    "Command execute in bg, exit monitor!": "命令后台执行中，退出执行监控！",
+    "Command done, exit code": "命令执行完成，退出代码",
+    "Current work path is: $1": "当前工作目录是: $1",
+    "System [$1] relationship [$2] with not define system name [$3]!": "系统[$1]关联关系[$2]存在未定义系统名[$3]!"
+}

@@ -1,0 +1,88 @@
+<graphviz>
+    <!-- graphviz画图的基本配置信息 -->
+    <templates>
+        <!--
+            配置模板, 每个节点为一个模板名, 每个模板需配置graph, node, edge三个的样式
+            具体样式参数参考：https://www.chungkwong.cc/dot.html
+        -->
+        <default>
+            <graph>
+                <!--
+                图的样式配置字典
+                -->
+            </graph>
+            <node>
+                <!--
+                节点的样式配置字典，常用参数包括
+                    shape : 形状, box-方框, ellipse-椭圆, circle-圆, 参考: https://www.graphviz.org/doc/info/shapes.html
+                    style : 样式, ''-线框, filled-颜色填充, dotted-虚线, 参考; https://www.graphviz.org/doc/info/attrs.html#k:style
+                    color : 颜色, black-黑色, 参考: https://www.graphviz.org/doc/info/colors.html
+                    fontname : 使用字体，如果不设置为支持中文的字体，中文将出现乱码
+                    附：Windows系统中文字体的英文名
+                        新細明體：PMingLiU
+                        細明體：MingLiU
+                        標楷體：DFKai-SB
+                        黑体：SimHei
+                        宋体：SimSun
+                        新宋体：NSimSun
+                        仿宋：FangSong
+                        楷体：KaiTi
+                        仿宋_GB2312：FangSong_GB2312
+                        楷体_GB2312：KaiTi_GB2312
+                        微軟正黑體：Microsoft JhengHei
+                        微软雅黑体：Microsoft YaHei
+                    ... 其他的graphviz参数
+                -->
+                <shape>ellipse</shape>
+                <style>filled</style>
+                <color>lightblue2</color>
+                <fontname>SimHei</fontname>
+            </node>
+            <edge>
+                <!--
+                连接线的样式配置信息
+                -->
+                <fontname>SimHei</fontname>
+            </edge>
+            <edge_color>
+                <!--
+                连接线颜色配置
+                    name_mapping : 关联连接线颜色与关系名映射, 如果在映射表中有, 则按映射设置颜色
+                        注: 标签名为关系名, 标签值为连接线颜色名
+                    use_round_color : bool, 是否使用循环颜色定义
+                    round_color : 循环颜色名称定义，用逗号分隔
+                -->
+                <name_mapping>
+                </name_mapping>
+                <use_round_color type='bool'>true</use_round_color>
+                <round_color>black,blue,coral,cyan,darkgreen,goldenrod,yellow</round_color>
+            </edge_color>
+            <trace>
+                <!--
+                追踪关系链路样式模板
+                -->
+                <center_node>
+                    <!-- 要追踪的节点的样式参数 -->
+                    <color>orangered</color>
+                </center_node>
+                <up_node>
+                    <!-- 上游节点的样式参数 -->
+                    <color>darkolivegreen1</color>
+                </up_node>
+                <down_node>
+                    <!-- 下游节点的样式参数 -->
+                    <color>burlywood1</color>
+                </down_node>
+                <up_edge>
+                    <!-- 上游箭头的样式参数 -->
+                    <color>green</color>
+                </up_edge>
+                <down_edge>
+                    <!-- 下游箭头的样式参数 -->
+                    <color>red</color>
+                </down_edge>
+            </trace>
+        </default>
+    </templates>
+
+</graphviz>

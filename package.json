@@ -1,0 +1,26 @@
+{
+  "name": "app_relation_net_graph",
+  "version": "0.1.0",
+  "description": "A command line tool for generate a graph of application relation net.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snakeclub/app_relation_net_graph.git"
+  },
+  "keywords": [],
+  "author": "黎慧剑",
+  "license": "MPL",
+  "bugs": {
+    "url": "https://github.com/snakeclub/app_relation_net_graph/issues"
+  },
+  "homepage": "https://github.com/snakeclub/app_relation_net_graph#readme",
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  }
+}

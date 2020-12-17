@@ -1,0 +1,420 @@
+<console>
+    <!--
+        控制台配置
+        name : 控制台名称
+        shell_cmd_name : 可直接执行的命令名称（注册到操作系统的软连接）
+        version : 版本，前面无需带V
+        language : 当前语言, 默认是en，可以选择zh_cn
+        i18n : 多语言翻译文件的存放目录（如果是相对目录，会以启动时的工作目录为准）;
+            注：如果不传值，会默认以当前安装包的目录找i18n目录
+        shell_encoding : 控制台命令行编码，一般来说windows为GBK，linux为utf-8
+        message : 命令行的开头提示信息
+        shell_cmd_help : 命令行直接执行的帮助信息(json)
+        start_tips : 启动时提示的信息(json)
+        default_dealfun : 默认处理函数配置（匹配不到命令的时候执行）
+        on_abort : Ctrl + C 取消本次输入执行函数
+        on_exit : Ctrl + D 关闭命令行执行函数
+        cmd_list : 嵌入的命令参数，每一个cmd标签就是一个命令配置
+            command : cmd命令
+            module_name : 模块名，注意应包含包路径
+            class_name : 处理类名
+            extend_path : 如果模块不在标准python搜索路径中，应传入搜索该模块的路径
+            init_para : 处理类初始化传入的JSON参数(字典形式)
+            cmd_para : 命令控制参数字典，如果只有命令无参数该字段可空，具体参数含义见HiveNetLib的prompt_plus手册
+            help : 命令帮助信息，是一个json格式的字典，key为帮助信息对应的语言，value为显示的多行数组
+                注：如果在字典里找不到对应的语言，则默认取第一个显示
+    -->
+    <name>app_relation_net_graph</name>
+    <shell_cmd_name>appnet</shell_cmd_name>
+    <version>0.1.0</version>
+    <language>zh_cn</language>
+    <i18n/>
+    <shell_encoding>GBK</shell_encoding>
+    <message>appnet/&gt; </message>
+    <shell_cmd_help>{
+        "en": [
+            "",
+            "{{NAME}} Power by Li Huijian @ 220",
+            "1. if you want to enter {{NAME}} Console, please execute '{{SHELL_CMD_NAME}}' in command line;",
+            "2. if you want to use self config file, please use 'config=you config file' para, and use 'encoding=utf-8' set the file encoding, like:",
+            "    # {{SHELL_CMD_NAME}} config=\"/myapp/config.xml\"",
+            "3. you can execute command use system shell directly, use 'shell_cmd=\"command string\"', like:",
+            "    # {{SHELL_CMD_NAME}} shell_cmd=\"cd d:/test/\"",
+            "    or use the follow method execute some command list in order",
+            "    # {{SHELL_CMD_NAME}} shell_cmd=\"[\\\"command 1\\\", \\\"command 2\\\", ...]\"",
+            "    Note:",
+            "    (1)if the command string has '\"', use '\\\"' transferred;",
+            "    (2)if the command string has '\\', use '\\\\' transferred;",
+            "    (3)for many command list，the list must use '\"' to sign the string.",
+            "4. you can execute a command list file, use 'shell_cmdfile=\"cmdfile\"', one command in one line in the file, like:",
+            "    # {{SHELL_CMD_NAME}} shell_cmdfile=\"cmd.txt\"",
+            "    Note: you can use 'cmdfile_encoding=uft-8' set the enconding of cmdfile",
+            ""
+        ],
+        "zh_cn": [
+                "",
+                "{{NAME}} Power by 黎慧剑 @ 2020",
+                "1. 要进入 {{NAME}} 控制台请在命令行输入 '{{SHELL_CMD_NAME}}'",
+                "2. 如果需要指定自定义配置文件, 请使用'config=自定义配置文件'参数, 以及通过'encoding=utf-8'指定配置文件编码, 例如:",
+                "    # {{SHELL_CMD_NAME}} config=\"/myapp/config.xml\"",
+                "3. 可以直接通过命令行直接执行所需要的命令, 使用'shell_cmd=\"需执行的命令\"', 例如:",
+                "    # {{SHELL_CMD_NAME}} shell_cmd=\"cd d:/test/\"",
+                "    或用以下数组方式顺序执行多个命令",
+                "    # {{SHELL_CMD_NAME}} shell_cmd=\"[\\\"命令1\\\", \\\"命令2\\\", ...]\"",
+                "    注意:",
+                "    (1)如果命令中有'\"'符号, 可以通过'\\\"'进行转义;",
+                "    (2)如果命令中需要有'\\', 可以通过'\\\\'进行转义;",
+                "    (3)多个命令的情况，数组中的命令必须使用'\"'作为字符串的标识.",
+                "4. 可以执行一个包含多个命令的文件，使用'shell_cmdfile=\"命令文件\"', 文件中一行是一个命令, 例如:",
+                "    # {{SHELL_CMD_NAME}} shell_cmdfile=\"cmd.txt\"",
+                "    注意: 可以使用'cmdfile_encoding=uft-8'指定解析文件的编码",
+                ""
+        ]
+    }
+    </shell_cmd_help>
+    <start_tips>{
+        "en": [
+            "",
+            "{{NAME}} Console V{{VERSION}}",
+            "Power by Li Huijian @ 2020",
+            "please type \"help\" to get help info",
+            "you can use Ctrl+C cancle when inputing, or use Ctrl+D exit the Console",
+            ""
+        ],
+        "zh_cn": [
+                "",
+                "{{NAME}} Console (控制台)  V{{VERSION}}",
+                "Power by 黎慧剑 @ 2020",
+                "查看命令帮助请执行 help 命令",
+                "输入过程中可通过Ctrl+C取消输入，通过Ctrl+D退出命令行处理服务",
+                ""
+        ]
+    }
+    </start_tips>
+    <default_dealfun>
+        <module_name>HiveNetLib.simple_console.base_cmd</module_name>
+        <class_name>CmdDefault</class_name>
+        <extend_path/>
+        <init_para/>
+    </default_dealfun>
+    <on_abort>
+        <module_name>HiveNetLib.simple_console.base_cmd</module_name>
+        <class_name>CmdOnAbort</class_name>
+        <extend_path/>
+        <init_para/>
+    </on_abort>
+    <on_exit>
+        <module_name>HiveNetLib.simple_console.base_cmd</module_name>
+        <class_name>CmdOnExit</class_name>
+        <extend_path/>
+        <init_para/>
+    </on_exit>
+    <logger>
+        <conf_file_name/>
+        <logger_name>Console</logger_name>
+        <logfile_path/>
+        <config_type>JSON_STR</config_type>
+        <json_str>{
+                    "version": 1,
+                    "disable_existing_loggers": false,
+                    "formatters": {
+                        "simpleFormatter": {
+                            "format": "[%(asctime)s.%(millisecond)s][%(levelname)s][PID:%(process)d][TID:%(thread)d][FILE:%(filename)s][FUN:%(funcName)s]%(message)s",
+                            "datefmt": "%Y_%m_%d %H:%M:%S"
+                        }
+                    },
+
+                    "handlers": {
+                        "ConsoleHandler": {
+                            "class": "logging.StreamHandler",
+                            "level": "DEBUG",
+                            "formatter": "simpleFormatter",
+                            "stream": "ext://sys.stdout"
+                        }
+                    },
+
+                    "loggers": {
+                        "Console": {
+                            "level": "DEBUG",
+                            "handlers": ["ConsoleHandler"]
+                        }
+                    },
+
+                    "root": {
+                        "level": "DEBUG",
+                        "handlers": []
+                    }
+                }</json_str>
+        <auto_create_conf>true</auto_create_conf>
+        <is_create_logfile_by_day>true</is_create_logfile_by_day>
+        <call_fun_level>0</call_fun_level>
+    </logger>
+    <cmd_list type="list">
+        <cmd>
+            <command>help</command>
+            <module_name>HiveNetLib.simple_console.base_cmd</module_name>
+            <class_name>CommonCmd</class_name>
+            <extend_path/>
+            <init_para/>
+            <cmd_para>{}
+            </cmd_para>
+            <help>{
+                "en": [
+                    "Support {{NAME}} console commands help info",
+                    "",
+                    "help [command]",
+                    "    command : show the [command string] command's help info",
+                    "",
+                    "demo: help help",
+                    ""
+                ],
+                "zh_cn": [
+                    "提供 {{NAME}} 控制台命令的帮助信息",
+                    "",
+                    "help [command]",
+                    "    command : 显示指定 command 命令的帮助信息",
+                    "",
+                    "示例: help help",
+                    ""
+                ]
+            }
+            </help>
+        </cmd>
+        <cmd>
+            <command>exit</command>
+            <module_name>HiveNetLib.simple_console.base_cmd</module_name>
+            <class_name>CmdOnExit</class_name>
+            <extend_path/>
+            <init_para/>
+            <cmd_para>{}
+            </cmd_para>
+            <help>{
+                "en": [
+                    "Exit {{NAME}} console",
+                    "",
+                    "demo: exit",
+                    ""
+                ],
+                "zh_cn": [
+                    "退出 {{NAME}} 控制台",
+                    "",
+                    "示例: exit",
+                    ""
+                ]
+            }
+            </help>
+        </cmd>
+        <cmd>
+            <command>pwd</command>
+            <module_name>HiveNetLib.simple_console.base_cmd</module_name>
+            <class_name>CommonCmd</class_name>
+            <extend_path/>
+            <init_para/>
+            <cmd_para>{}
+            </cmd_para>
+            <help>{
+                "en": [
+                    "Show current work path",
+                    "",
+                    "demo: pwd",
+                    ""
+                ],
+                "zh_cn": [
+                    "显示当前工作目录",
+                    "",
+                    "示例: pwd",
+                    ""
+                ]
+            }
+            </help>
+        </cmd>
+        <cmd>
+            <command>setlanguage</command>
+            <module_name>HiveNetLib.simple_console.base_cmd</module_name>
+            <class_name>CommonCmd</class_name>
+            <extend_path/>
+            <init_para/>
+            <cmd_para>{
+                "word_para": {
+                    "en": "",
+                    "zh_cn": ""
+                }
+            }
+            </cmd_para>
+            <help>{
+                "en": [
+                    "Change language",
+                    "",
+                    "setlanguage lang",
+                    "    lang : tag of language, like 'en' or 'zh_ch'",
+                    "",
+                    "demo: setlanguage en",
+                    ""
+                ]
+            }
+            </help>
+        </cmd>
+        <cmd>
+            <command>cd</command>
+            <module_name>HiveNetLib.simple_console.base_cmd</module_name>
+            <class_name>CommonCmd</class_name>
+            <extend_path/>
+            <init_para/>
+            <cmd_para>{}
+            </cmd_para>
+            <help>{
+                "en": [
+                    "Change current work path",
+                    "",
+                    "cd path",
+                    "    path : new work path",
+                    "",
+                    "demo: cd d:\\test\\",
+                    ""
+                ],
+                "zh_cn": [
+                    "修改当前工作目录",
+                    "",
+                    "cd path",
+                    "    path : 要修改的工作目录",
+                    "",
+                    "示例: cd d:\\test\\",
+                    ""
+                ]
+            }
+            </help>
+        </cmd>
+        <cmd>
+            <command>syscmd</command>
+            <module_name>HiveNetLib.simple_console.base_cmd</module_name>
+            <class_name>CommonCmd</class_name>
+            <extend_path/>
+            <init_para/>
+            <cmd_para>{
+                "long_para": {
+                    "ni": [],
+                    "bg": [],
+                    "ns": []
+                }
+            }
+            </cmd_para>
+            <help>{
+                "en": [
+                        "Execute system command",
+                        "",
+                        "syscmd [-ni] [-bg] [-ns] [command]",
+                        "    command : execute system command, can be followed by specific execution parameters",
+                        "    -ni : No interruption allowed, Ctrl + C encountered when specifying this parameter is masked and waits for the command to complete",
+                        "    -bg : Background execution parameters, this parameter represents the command executing in the background, an interrupt does not end the command execution process",
+                        "    -ns : Execution results are not displayed, specifies that this parameter does not output the information that the command executes",
+                        "",
+                        "demo: syscmd dir /w",
+                        ""
+                ],
+                "zh_cn": [
+                        "执行操作系统自有命令",
+                        "",
+                        "syscmd [-ni] [-bg] [-ns] [command]",
+                        "    command : 执行操作系统命令，命令后面可以带具体执行参数",
+                        "    -ni : 不允许中断，指定该参数时遇到 Ctrl + C 会被屏蔽并等待命令执行完成",
+                        "    -bg : 后台执行参数，执行该参数代表命令在后台执行，中断时不会结束命令执行进程",
+                        "    -ns : 不显示执行结果，指定该参数不输出命令执行所输出的信息",
+                        "",
+                        "示例: syscmd dir /w",
+                        ""
+                ]
+            }
+            </help>
+        </cmd>
+
+
+        <cmd>
+            <command>graph</command>
+            <module_name>app_relation_net_graph.lib.appnet_cmd</module_name>
+            <class_name>AppNetCmd</class_name>
+            <extend_path/>
+            <init_para/>
+            <cmd_para>{
+                "name_para": {
+                    "formatter": ["col-list"],
+                    "comment": [],
+                    "outformat": ["pdf", "jpg", "jpeg", "png", "svg", "psd"],
+                    "direction": ["forward", "reverse"],
+                    "trace_id": [],
+                    "display_no_trace": ["true", "false"],
+                    "down_flow_first": ["true", "false"],
+                    "trace_relations": [],
+                    "save": [],
+                    "temp": [],
+                    "view": ["true", "false"],
+                    "cleanup": [],
+                    "graph_config": [],
+                    "template": []
+                }
+            }
+            </cmd_para>
+            <help>{
+                "en": [
+                        "create app relation net graph",
+                        "",
+                        "graph file [formatter=...] ...",
+                        "    file : the file to create net graph",
+                        "    formatter : file formatter, supported this formatter:",
+                        "        col-list - excel file col-list mode, with first row of title, title and content follows:",
+                        "            id - id of the system of module",
+                        "            name - option, show name of the system of module",
+                        "            rank - option, group name of system, system in the same group will show in a line",
+                        "            relation_name_1 - system list which has relationship of the system, use ',' split mutiple systems, can use id or name in list, match id first",
+                        "            ... - can present mutiple relationship with many cols",
+                        "    comment : the comment of the graph",
+                        "    direction : relation arrow direction, forward - current system flow to systems in list; reverse - systems in list flow to current system",
+                        "    trace_id : node id which need to trace, nodes and arrow in the trace train can set special style",
+                        "    display_no_trace : display nods that not in the trace train,, defalut false",
+                        "    down_flow_first : find down flow nodes first, effect circle train show style, default true",
+                        "    trace_relations : relation names which join trace, use ',' split, all relations join if not set",
+                        "    outformat : output file format, default by pdf",
+                        "    save : the file of the output, default 'graph.*'",
+                        "    temp : temp path setting",
+                        "    view : view graph file when finished, default true",
+                        "    cleanup : Delete the source file when finished, default false",
+                        "    graph_config : graph style config file, defualt use './conf/graph_config.xml'",
+                        "    template : the template name of graph_config, default templates",
+                        "",
+                        "demo: graph ./test.xlsx comment=\"net graph\"",
+                        ""
+                ],
+                "zh_cn": [
+                        "生成应用关系网络图",
+                        "",
+                        "graph file [formatter=...] ...",
+                        "    file : 要生成网络图的文件",
+                        "    formatter : 导入文件格式化类型, 支持格式化类型如下:",
+                        "        col-list - excel格式列清单模式, 文件包含标题行, 标题命名和具体内容要求如下:",
+                        "            id - 系统或模块的唯一标识",
+                        "            name - 可选, 系统或模块的显示名称",
+                        "            rank - 可选, 系统或模块归集为一个组的组名, 同一个组的图示在同一行显示",
+                        "            关系名1 - 与当前系统具有指定关系的系统清单, 多个系统间用','分隔, 系统使用id或name都可以, 匹配规则是优先使用ID匹配",
+                        "            ... - 按行可以列举多个关系",
+                        "    comment : 关系图的描述内容",
+                        "    direction : 关系箭头方向, forward-正向, 当前系统流向关系清单中的系统; reverse - 反向, 关系清单中的系统流向当前系统",
+                        "    trace_id : 需要追踪调用链的系统ID, 调用链上节点和箭头可设置特定样式显示",
+                        "    display_no_trace : 不在调用链上的节点不显示, 默认为false",
+                        "    down_flow_first : 调用链查找从中心节点下游优先标记, 该参数主要影响形成闭环的节点显示, 默认为true",
+                        "    trace_relations : 参与追踪的关系名称列表, 多个使用逗号分隔, 不传代表所有关系都参与追踪",
+                        "    outformat : 关系图的输出文件格式, 默认为pdf格式",
+                        "    save : 保存的网络图文件, 默认为'graph.*'",
+                        "    temp : 临时目录配置",
+                        "    view : 生成完成后是否显示文件, 默认为true",
+                        "    cleanup : 生成完成后是否删除源文件, 默认为false",
+                        "    graph_config : 图样式配置文件, 默认为执行目录下 './conf/graph_config.xml' 文件",
+                        "    template : 使用graph_config中的样式模板名, 默认为 templates",
+                        "",
+                        "示例: graph ./test.xlsx comment=网络图",
+                        ""
+                ]
+            }
+            </help>
+        </cmd>
+
+    </cmd_list>
+</console>
